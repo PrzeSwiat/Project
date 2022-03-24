@@ -17,5 +17,10 @@ namespace Testing
         {
             Assert.AreEqual(class1.subtract(1,19), -18);
         }
+        [TestMethod]
+        public void TestMethodpow()
+        {
+            Assert.AreEqual(class1.pow(2,3),8);
+        }
     }
 }

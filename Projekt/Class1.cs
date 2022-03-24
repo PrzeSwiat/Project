@@ -13,5 +13,16 @@ namespace Projekt
         {
             return x - y;
         }
+
+        public int pow(int x, int y)
+        {   int score =1;
+            for (int i = 0; i < y; i++)
+            {
+                score *= x;
+            }
+            return score;
+        }
+        
+         
     }
 }
