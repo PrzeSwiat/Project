@@ -19,10 +19,24 @@
 
         <Button
         Name="myButton" 
+        Content="Click to add new sphere"
+        Background="LightGray"
+        Canvas.Left ="500"/>
 
-        Content="Click on me"
+        <Button
+        Name="secondButton" 
+        Content="Confirm"
         Background="LightGray"
         Canvas.Left ="400"/>
+
+
+        <TextBox Width="150" MaxLength="20" 
+               Canvas.Left ="250"
+                 Canvas.Top="10" HorizontalAlignment="Left" VerticalAlignment="Center" 
+                Text="Enter ammount of circles..."> 
+        </TextBox>
+
+       
 
         <Rectangle
         Width="800"
@@ -31,5 +45,16 @@
         StrokeThickness="4"
             Canvas.Left="50"
             Canvas.Top="50"/>
+
+        <Ellipse
+        Width="50"
+        Height="50"
+        Fill="#42b6f5"
+        Canvas.Left="400"
+        Canvas.Top="300"
+        Stroke="Black"
+        StrokeThickness="2"
+            />
+
     </Canvas>
-    </mah:MetroWindow>
+</mah:MetroWindow>
