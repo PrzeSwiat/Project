@@ -9,8 +9,14 @@ namespace Logika
 {
     public class SpheresLogic
     {
-        private ShapesDataApi shapesDataApi;
-        private Shapes shape;
+        private ShapesDataApi ShapesDataApi;
+        private Shapes Shape;
+
+        public SpheresLogic()
+        {
+            ShapesDataApi = ShapesDataApi.CreateShapesList();
+        }
+        
 
         public Shapes InitializeSphere()
         {
@@ -18,12 +24,39 @@ namespace Logika
             double rndX = rnd.Next(100, 800);
             double rndY = rnd.Next(100, 500);
             double rndR = rnd.Next(20, 50);
+            Shape = ShapesDataApi.CreateSphere(rndX,rndY,rndR);
+            ShapesDataApi.Add(Shape);
 
-            shapesDataApi = ShapesDataApi.CreateShapesList();
-            shape = ShapesDataApi.CreateSphere(rndX,rndY,rndR);
-            shapesDataApi.Add(shape);
+            return Shape;
+        }
 
-            return shape;
+        public List<double> OrderPositionChange()
+        {
+            Random rnd = new Random();
+            double rndPosX = rnd.Next(150, 750);
+            double rndPosY = rnd.Next(150, 450);
+
+            List<double> orderPositions = new List<double>();
+            orderPositions.Add(rndPosX);
+            orderPositions.Add(rndPosY);
+
+            return orderPositions;
+        }
+
+        public int DatasCounter()
+        {
+            int counter = 0;
+            for (int i = 0; i < ShapesDataApi.Count(); i++)
+            {
+                counter++;
+            }
+
+            return counter;
+        }
+
+        public Sphere GetSphere(int index)
+        {
+            return (Sphere)ShapesDataApi.Get(index);
         }
 
     }

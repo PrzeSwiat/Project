@@ -16,8 +16,8 @@ namespace Dane
     public class Sphere : Shapes
     {
         private double Radius { get; set; }
-        public double PositionX { get; set; }
-        public double PositionY { get; set; }
+        public double PositionX { get; private set; }
+        public double PositionY { get; private set; }
         private double VectorX { get; set; }
         private double VectorY { get; set; }
 

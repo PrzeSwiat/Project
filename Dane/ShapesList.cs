@@ -8,31 +8,31 @@ namespace Dane
 {
     public class ShapesList : ShapesDataApi
     {
-        private List<Shapes> shapes;
+        private List<Shapes> Shapes;
 
         public ShapesList()
         {
-           this.shapes = new List<Shapes>();
+           this.Shapes = new List<Shapes>();
         }
 
         public override void Add(Shapes shape)
         {
-            shapes.Add(shape);
+            Shapes.Add(shape);
         }
 
         public override int Count()
         {
-          return shapes.Count();
+          return Shapes.Count();
         }
 
         public override Shapes Get(int index)
         {
-            return shapes[index];
+            return Shapes[index];
         }
 
         public override void Remove(Shapes shape)
         {
-            shapes.Remove(shape);
+            Shapes.Remove(shape);
         }
     }
 }

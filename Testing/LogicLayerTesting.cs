@@ -28,6 +28,16 @@ namespace Testing
             }
         }
 
+        [TestMethod]
+        public void DatasCounterTest()
+        {
+            spheresLogic.InitializeSphere();
+            spheresLogic.InitializeSphere();
+            spheresLogic.InitializeSphere();
+
+            Assert.AreEqual(spheresLogic.DatasCounter(), 3);
+        }
+
        
     }
 }
