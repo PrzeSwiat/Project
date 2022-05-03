@@ -13,31 +13,28 @@ namespace Dane
         private double VectorX { get; set; }
         private double VectorY { get; set; }
     }
-    internal class Sphere : Shapes
+    public class Sphere : Shapes
     {
         private double Radius { get; set; }
-        private double PositionX { get; set; }
-        private double PositionY { get; set; }
+        public double PositionX { get; set; }
+        public double PositionY { get; set; }
         private double VectorX { get; set; }
         private double VectorY { get; set; }
 
         public Sphere(double positionX, double positionY, double radius)
         {
-            Radius = radius;
-            PositionX = positionX;
-            PositionY = positionY;
-            
+            this.Radius = radius;
+            this.PositionX = positionX;
+            this.PositionY = positionY;
         }
 
         public void Move(double vectorX, double vectorY)
         {
-            VectorX = vectorX;
-            VectorY = vectorY;
+            this.VectorX = vectorX;
+            this.VectorY = vectorY;
             PositionX += VectorX;
             PositionY += VectorY;
         }
-
-
 
     }
 

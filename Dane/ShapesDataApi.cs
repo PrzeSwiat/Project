@@ -13,11 +13,16 @@ namespace Dane
         public abstract void Remove(Shapes shape);
         public abstract int Count();
 
-        public static Shapes Create(double positionX, double positionY, double radius)
+        public static Sphere CreateSphere(double positionX, double positionY, double radius)
         {
             return new Sphere(positionX, positionY, radius);
+        }
 
+        public static ShapesList CreateShapesList()
+        {
+            return new ShapesList();
         }
         
+       
     }
 }
