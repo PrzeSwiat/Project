@@ -9,7 +9,7 @@ using System.Windows;
 using System.Windows.Input;
 using ViewModel;
 
-namespace Prezentacja.ViewModels
+namespace ViewModels
 {
     public class MainViewModel : INotifyPropertyChanged
     {
@@ -45,8 +45,7 @@ namespace Prezentacja.ViewModels
 
         private void ConfirmButton(object obj)
         {
-
-
+            
         }
 
         public ICommand ConfirmButtomCommand

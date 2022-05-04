@@ -1,0 +1,67 @@
+﻿<mah:MetroWindow x:Class="Prezentacja.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Prezentacja"
+        xmlns:mah="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+        xmlns:vm ="clr-namespace:ViewModels;assembly=ViewModel"
+        mc:Ignorable="d"
+        Title="Programowanie Współbieżne" Height="600" Width="900">
+    
+    <mah:MetroWindow.DataContext>
+        <vm:MainViewModel/>
+    </mah:MetroWindow.DataContext>
+
+    <mah:MetroWindow.Resources>
+        <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="Margin" Value="5"/>
+        </Style>
+    </mah:MetroWindow.Resources>
+
+    <Canvas Name="myRectangle" Focusable ="True" >
+
+        <Button
+        Name="myButton" 
+        Content="Click to add new sphere"
+        Background="LightGray"
+        Canvas.Left ="500"
+        Command="{Binding AddSphereCommand}"/>
+
+        <Button
+        Name="secondButton" 
+        Content="Confirm"
+        Background="LightGray"
+        Canvas.Left ="400"
+        Command="{Binding ConfirmButtomCommand}"/>
+
+
+        <TextBox Width="150" MaxLength="20" 
+               Canvas.Left ="250"
+                 Canvas.Top="10" HorizontalAlignment="Left" VerticalAlignment="Center" 
+                Text="{Binding ChangeOfText}">
+        </TextBox>
+
+
+
+        <Rectangle
+        Width="800"
+        Height="500"
+        Stroke="gray"
+        StrokeThickness="4"
+            Canvas.Left="50"
+            Canvas.Top="50"/>
+
+        <Ellipse
+        Width="50"
+        Height="50"
+        Fill="#42b6f5"
+        Canvas.Left="400"
+        Canvas.Top="300"
+        Stroke="Black"
+        StrokeThickness="2"
+            />
+
+    </Canvas>
+</mah:MetroWindow>
