@@ -1,5 +1,4 @@
-﻿using Prezentacja.Commands;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -8,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
-using System.Windows.Shapes;
+using ViewModel;
 
 namespace Prezentacja.ViewModels
 {
@@ -17,7 +16,7 @@ namespace Prezentacja.ViewModels
         private string _buttonClick;
         private string _changeOfText;
 
-        
+
 
         public MainViewModel()
         {
@@ -29,9 +28,9 @@ namespace Prezentacja.ViewModels
         public string ChangeOfText
         {
             get { return _changeOfText; }
-            set 
+            set
             {
-                _changeOfText = value; 
+                _changeOfText = value;
                 OnPropertyChanged();
             }
         }
@@ -46,8 +45,7 @@ namespace Prezentacja.ViewModels
 
         private void ConfirmButton(object obj)
         {
-           
-                MessageBox.Show("test");
+
 
         }
 
@@ -63,10 +61,10 @@ namespace Prezentacja.ViewModels
         }
 
         public string ButtonClick
-        { 
+        {
             get { return _buttonClick; }
-            set 
-            { 
+            set
+            {
                 _buttonClick = value;
                 OnPropertyChanged();
             }

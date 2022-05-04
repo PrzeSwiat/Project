@@ -3,12 +3,11 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Prezentacja"  
+        xmlns:local="clr-namespace:Prezentacja"
         xmlns:mah="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         mc:Ignorable="d"
         Title="Programowanie Współbieżne" Height="600" Width="900">
 
-        
     <mah:MetroWindow.Resources>
         <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
             <Setter Property="FontSize" Value="16"/>
@@ -36,10 +35,10 @@
         <TextBox Width="150" MaxLength="20" 
                Canvas.Left ="250"
                  Canvas.Top="10" HorizontalAlignment="Left" VerticalAlignment="Center" 
-                Text="{Binding ChangeOfText}"> 
+                Text="{Binding ChangeOfText}">
         </TextBox>
 
-       
+
 
         <Rectangle
         Width="800"

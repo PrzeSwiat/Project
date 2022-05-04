@@ -9,6 +9,7 @@ namespace Logika
 {
     public class Tasker
     {
+
         private SpheresLogic spheresLogic = new SpheresLogic();
         public void MainOperator()//tutaj bedzie dostawał komunikat ze jest kolejna kula (uzytkowanik klick)
         {
@@ -16,14 +17,23 @@ namespace Logika
             spheresLogic.InitializeSphere();
 
 
-            //to musi byc jeden cykl (tutaj będa się aktualizować wszystkie kule jakie będa na planszy)
-            Parallel.For(0, spheresLogic.DatasCounter(), i =>
-            {
-                ActualizePosition(spheresLogic.GetSphere(i), 0.1, 0.1);//ZMIEN TO !
 
 
-            });
 
+
+
+
+
+
+
+            ////to musi byc jeden cykl (tutaj będa się aktualizować wszystkie kule jakie będa na planszy)
+            //Parallel.For(0, spheresLogic.DatasCounter(), i =>
+            //{
+            //    ActualizePosition(spheresLogic.GetSphere(i), 0.1, 0.1);//ZMIEN TO !
+
+            //});
+
+            
 
 
         }
