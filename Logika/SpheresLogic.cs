@@ -59,5 +59,18 @@ namespace Logika
             return (Sphere)ShapesDataApi.Get(index);
         }
 
+        public double GetXPos(int index)
+        {
+            return ShapesDataApi.GetX(index);
+        }
+        public double GetYPos(int index)
+        {
+            return ShapesDataApi.GetY(index);
+        }
+        public double GetRad(int index)
+        {
+            return ShapesDataApi.GetRad(index);
+        }
+
     }
 }

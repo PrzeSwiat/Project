@@ -1,5 +1,4 @@
 ﻿using Aspose.Pdf.Drawing;
-using DocumentFormat.OpenXml.InkML;
 using Logika;
 using System;
 using System.Collections.Generic;
@@ -9,7 +8,7 @@ using System.Text;
 
 namespace Model
 {
-    public class DataStore 
+    public class DataStore
     {
         private readonly List<Ellipse> ellipses;
         private int AmountOfSpheres = 0;

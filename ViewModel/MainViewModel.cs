@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using ViewModel;
+using Model;
 
 namespace ViewModels
 {
@@ -23,6 +24,9 @@ namespace ViewModels
             ChangeOfText = "Set amount of Spheres";
             ConfirmButtomCommand = new RelayCommand(ConfirmButton);
             AddSphereCommand = new RelayCommand(AddSphere);
+
+
+
         }
 
         public string ChangeOfText
@@ -37,10 +41,7 @@ namespace ViewModels
 
         private void AddSphere(object obj)
         {
-            //Ellipse elipse = new Ellipse
-            //{
-
-            //}
+           
         }
 
         private void ConfirmButton(object obj)

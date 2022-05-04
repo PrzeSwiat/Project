@@ -30,6 +30,25 @@ namespace Dane
             return Shapes[index];
         }
 
+        public override double GetRad(int index)
+        {
+            Sphere shape = (Sphere)Shapes[index];
+            return shape.Radius;
+            
+        }
+
+        public override double GetX(int index)
+        {
+            Sphere shape = (Sphere)Shapes[index];
+            return shape.PositionX;
+        }
+
+        public override double GetY(int index)
+        {
+            Sphere shape = (Sphere)Shapes[index];
+            return shape.PositionY;
+        }
+
         public override void Remove(Shapes shape)
         {
             Shapes.Remove(shape);

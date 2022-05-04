@@ -12,6 +12,9 @@ namespace Dane
         public abstract void Add(Shapes shape);
         public abstract void Remove(Shapes shape);
         public abstract int Count();
+        public abstract double GetX(int index);
+        public abstract double GetY(int index);
+        public abstract double GetRad(int index);
 
         public static Sphere CreateSphere(double positionX, double positionY, double radius)
         {
