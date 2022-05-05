@@ -16,12 +16,9 @@ namespace ViewModels
 {
     public class MainViewModel : ViewModelBase
     {
-        DataStore dataStore;
-        private string _buttonClick;
+        DataStore dataStore = new DataStore();
         private string _changeOfText = "Set amount of Spheres";
         private int AmountOfShperes=0;
-        private ObservableCollection<DataStore> _items;
-        private static System.Timers.Timer? Timer;
 
         public MainViewModel()
         {
@@ -32,10 +29,8 @@ namespace ViewModels
         }
         private void AddSphereHandler()
         {
-            Items = new ObservableCollection<DataStore>();
-            DataStore dataStore= new DataStore();
             dataStore.CreateOneSphere();
-            Items.Add(dataStore);
+            OnPropertyChanged("Items");
 
         }
         private void ConfirmButtonHandler()
@@ -50,6 +45,12 @@ namespace ViewModels
             }
 
             ChangeOfText = _changeOfText.ToString();
+
+            for (int i = 0; i < AmountOfShperes; i++)
+            {
+                dataStore.CreateOneSphere();
+                OnPropertyChanged("Items");
+            }
         }
 
 
@@ -64,30 +65,17 @@ namespace ViewModels
             }
         }
 
-        public ICommand ConfirmButtonCommand
+        public RelayCommand ConfirmButtonCommand
         {
             get;
             set;
         }
-        public ICommand AddSphereCommand
+        public RelayCommand AddSphereCommand
         {
             get;
             set;
         }
 
-
-        public ObservableCollection<DataStore> Items 
-        {
-            get
-            {
-                return _items;
-            }
-            set
-            {
-                _items = value;
-                RaisePropertyChanged("Items");
-            }
-        }
 
         public event PropertyChangedEventHandler PropertyChanged;
 

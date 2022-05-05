@@ -11,12 +11,15 @@ namespace Logika
     {
         private ShapesDataApi ShapesDataApi;
         private Shapes Shape;
+        private double MoveX;
+        private double MoveY;
+        private int SphereIndex;
 
         public SpheresLogic()
         {
             ShapesDataApi = ShapesDataApi.CreateShapesList();
         }
-        
+
 
         public Shapes InitializeSphere()
         {
@@ -24,8 +27,9 @@ namespace Logika
             double rndX = rnd.Next(100, 800);
             double rndY = rnd.Next(100, 500);
             double rndR = 35;
-            Shape = ShapesDataApi.CreateSphere(rndX,rndY,rndR);
+            Shape = ShapesDataApi.CreateSphere(rndX, rndY, rndR);
             ShapesDataApi.Add(Shape);
+            SphereIndex = ShapesDataApi.Count();
 
             return Shape;
         }
@@ -71,10 +75,14 @@ namespace Logika
         {
             return ShapesDataApi.GetRad(index);
         }
-        
-        public void MoveToNextPos(double x, double y, int index)
+
+        public void MoveToNextPos()
         {
-            ShapesDataApi.MoveNext(x, y, index);
+            var lista = OrderPositionChange();
+            MoveX = lista[0];
+            MoveY = lista[1];
+            ShapesDataApi.MoveNext(MoveX, MoveY, SphereIndex);
         }
+
     }
 }

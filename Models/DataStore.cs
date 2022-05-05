@@ -22,18 +22,17 @@ namespace Model
         public DataStore()
         {
             Sphere newShape = (Sphere)spheresLogic.InitializeSphere();
-
         }
 
-        public double ElipseX 
+        public double ElipseX
         {
-            get { return spheresLogic.GetXPos(AmountOfSpheres);}
-            set { spheresLogic.MoveToNextPos(value,0,AmountOfSpheres); }
+            get { return spheresLogic.GetXPos(AmountOfSpheres); }
+            set { spheresLogic.MoveToNextPos(); }
         }
         public double ElipseY
         {
             get { return spheresLogic.GetYPos(AmountOfSpheres); }
-            set { spheresLogic.MoveToNextPos(0, value, AmountOfSpheres); }
+            set { spheresLogic.MoveToNextPos(); }
         }
 
         public DataStore CreateOneSphere()
@@ -49,12 +48,15 @@ namespace Model
 
         public void CreateAmountOfShperes(int amount)
         {
-            for(int i = 0; i < amount; i++)
+            for (int i = 0; i < amount; i++)
             {
                 CreateOneSphere();
             }
         }
 
-
+        internal void TickSpheres()
+        {
+            spheresLogic.MoveToNextPos();
+        }
     }
 }

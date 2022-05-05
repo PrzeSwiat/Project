@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Dane
 {
-     public abstract class ShapesDataApi
+    public abstract class ShapesDataApi
     {
         public abstract Shapes Get(int index);
         public abstract void Add(Shapes shape);
@@ -27,7 +27,7 @@ namespace Dane
         {
             return new ShapesList();
         }
-        
-       
+
+
     }
 }
