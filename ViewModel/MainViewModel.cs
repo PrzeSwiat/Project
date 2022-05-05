@@ -17,21 +17,24 @@ namespace ViewModels
 {
     public class MainViewModel : ViewModelBase
     {
-        DataStore dataStore = new DataStore();
+        public RelayCommand _add { get; }
+        public RelayCommand _confirm { get; }
+        DataStore dataStore { get; }
         private string _changeOfText = "Set amount of Spheres";
         private int AmountOfShperes=0;
-        public Sphere[]? Items { get => dataStore.GetAllSpheres().ToArray(); }
+       
 
         public MainViewModel()
         {
            
-            AddSphereCommand = new RelayCommand(() => AddSphereHandler());
-            ConfirmButtonCommand = new RelayCommand(() => ConfirmButtonHandler());
+            _add = new RelayCommand(() => AddSphereHandler());
+            _confirm = new RelayCommand(() => ConfirmButtonHandler());
+            dataStore = new DataStore();
 
         }
         private void AddSphereHandler()
         {
-            dataStore.CreateOneSphere();
+            dataStore.CreateOneSphere();    
             OnPropertyChanged("Items");
 
         }
@@ -67,18 +70,7 @@ namespace ViewModels
             }
         }
 
-
-
-        public RelayCommand ConfirmButtonCommand
-        {
-            get;
-            set;
-        }
-        public RelayCommand AddSphereCommand
-        {
-            get;
-            set;
-        }
+        public Sphere[]? Items { get => dataStore.GetAllSpheres().ToArray(); }
 
 
         public event PropertyChangedEventHandler PropertyChanged;

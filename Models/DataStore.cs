@@ -21,7 +21,7 @@ namespace Model
 
         public DataStore()
         {
-            Sphere newShape = (Sphere)spheresLogic.InitializeSphere();
+            //Sphere newShape = (Sphere)spheresLogic.InitializeSphere();
         }
 
         public List<Sphere> GetAllSpheres()
