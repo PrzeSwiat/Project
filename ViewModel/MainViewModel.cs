@@ -11,6 +11,7 @@ using ViewModel;
 using Model;
 using System.Windows.Controls;
 using System.Collections.ObjectModel;
+using Dane;
 
 namespace ViewModels
 {
@@ -19,6 +20,7 @@ namespace ViewModels
         DataStore dataStore = new DataStore();
         private string _changeOfText = "Set amount of Spheres";
         private int AmountOfShperes=0;
+        public Sphere[]? Items { get => dataStore.GetAllSpheres().ToArray(); }
 
         public MainViewModel()
         {
@@ -64,6 +66,8 @@ namespace ViewModels
                 RaisePropertyChanged("ChangeOfText");
             }
         }
+
+
 
         public RelayCommand ConfirmButtonCommand
         {

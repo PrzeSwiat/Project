@@ -49,23 +49,23 @@
                     </Canvas>
                 </ItemsPanelTemplate>
             </ItemsControl.ItemsPanel>
-
+            <ItemsControl.ItemContainerStyle>
+                <Style TargetType="ContentPresenter">
+                    <Setter Property="Canvas.Left" Value="{Binding XPosition}" />
+                    <Setter Property="Canvas.Top" Value="{Binding YPosition}" />
+                </Style>
+            </ItemsControl.ItemContainerStyle>
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <Path Fill="#fc0352">
+                    <Path Fill="#34a4eb">
                         <Path.Data>
-                            <EllipseGeometry RadiusX="20" RadiusY="20"/>
+                            <EllipseGeometry RadiusX="20" RadiusY="20" />
                         </Path.Data>
                     </Path>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
 
-            <ItemsControl.ItemContainerStyle>
-                <Style TargetType="ContentPresenter">
-                    <Setter Property="Canvas.Left" Value="{Binding XPos}"/>
-                    <Setter Property="Canvas.Bottom" Value="{Binding YPos}"/>
-                </Style>
-            </ItemsControl.ItemContainerStyle>
+      
         </ItemsControl>
     </Canvas>
 </mah:MetroWindow>

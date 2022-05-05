@@ -19,7 +19,7 @@ namespace Dane
         {
             Shapes.Add(shape);
         }
-
+        
         public override int Count()
         {
             return Shapes.Count();
@@ -35,6 +35,17 @@ namespace Dane
             Sphere shape = (Sphere)Shapes[index];
             return shape.Radius;
 
+        }
+
+        public override List<Sphere> GetSpheres()
+        {
+            List<Sphere> spheres = new List<Sphere>();
+            foreach(Shapes shape in Shapes)
+            {
+                spheres.Add((Sphere)shape);
+            }
+            
+            return spheres;
         }
 
         public override double GetX(int index)

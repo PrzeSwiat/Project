@@ -24,6 +24,11 @@ namespace Model
             Sphere newShape = (Sphere)spheresLogic.InitializeSphere();
         }
 
+        public List<Sphere> GetAllSpheres()
+        {
+            return spheresLogic.GetAllOfSpheres();
+        }
+
         public double ElipseX
         {
             get { return spheresLogic.GetXPos(AmountOfSpheres); }

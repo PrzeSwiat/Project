@@ -18,6 +18,7 @@ namespace Dane
 
         public abstract double GetRad(int index);
 
+        public abstract List<Sphere> GetSpheres();
         public static Sphere CreateSphere(double positionX, double positionY, double radius)
         {
             return new Sphere(positionX, positionY, radius);

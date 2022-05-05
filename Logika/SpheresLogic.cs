@@ -20,6 +20,10 @@ namespace Logika
             ShapesDataApi = ShapesDataApi.CreateShapesList();
         }
 
+        public List<Sphere> GetAllOfSpheres()
+        {
+            return ShapesDataApi.GetSpheres();
+        }
 
         public Shapes InitializeSphere()
         {
