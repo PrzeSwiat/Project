@@ -14,6 +14,8 @@ namespace Dane
         public abstract int Count();
         public abstract double GetX(int index);
         public abstract double GetY(int index);
+        public abstract void MoveNext(double x, double y, int index);
+
         public abstract double GetRad(int index);
 
         public static Sphere CreateSphere(double positionX, double positionY, double radius)
@@ -26,7 +28,6 @@ namespace Dane
             return new ShapesList();
         }
         
-
        
     }
 }

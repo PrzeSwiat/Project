@@ -9,22 +9,20 @@ using System.Windows;
 using System.Windows.Input;
 using ViewModel;
 using Model;
+using System.Windows.Controls;
 
 namespace ViewModels
 {
-    public class MainViewModel : INotifyPropertyChanged
+    public class MainViewModel : ViewModelBase
     {
         private string _buttonClick;
         private string _changeOfText;
-
-
+        private DataStore DataStore = new DataStore();
 
         public MainViewModel()
         {
             ChangeOfText = "Set amount of Spheres";
-            ConfirmButtomCommand = new RelayCommand(ConfirmButton);
-            AddSphereCommand = new RelayCommand(AddSphere);
-
+            AddSphereCommand = new RelayCommand(DataStore.CreateOneSphere);
 
 
         }
@@ -39,22 +37,12 @@ namespace ViewModels
             }
         }
 
-        private void AddSphere(object obj)
-        {
-           
-        }
-
-        private void ConfirmButton(object obj)
-        {
-            
-        }
-
-        public ICommand ConfirmButtomCommand
+        public RelayCommand ConfirmButtomCommand
         {
             get;
             set;
         }
-        public ICommand AddSphereCommand
+        public RelayCommand AddSphereCommand
         {
             get;
             set;

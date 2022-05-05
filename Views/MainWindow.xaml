@@ -42,26 +42,21 @@
                  Canvas.Top="10" HorizontalAlignment="Left" VerticalAlignment="Center" 
                 Text="{Binding ChangeOfText}">
         </TextBox>
+        <Rectangle Width="800" Height="500" Stroke="Gray" StrokeThickness="3" Canvas.Left="50" Canvas.Bottom="25"/>
+        <ItemsControl x:Name="ic" ItemsSource="{Binding Items}">
+            <ItemsControl.Resources>
+                <DataTemplate DataType="{x:Type vm:MainViewModel}">
+                    <Ellipse Fill="#1a79ed" Stroke="Black" StrokeThickness="2" Width="35" Height="35"/>
+                </DataTemplate>
+            </ItemsControl.Resources>
 
-
-
-        <Rectangle
-        Width="800"
-        Height="500"
-        Stroke="gray"
-        StrokeThickness="4"
-            Canvas.Left="50"
-            Canvas.Top="50"/>
-
-        <Ellipse
-        Width="50"
-        Height="50"
-        Fill="#42b6f5"
-        Canvas.Left="400"
-        Canvas.Top="300"
-        Stroke="Black"
-        StrokeThickness="2"
-            />
+            <ItemsControl.ItemContainerStyle>
+                <Style TargetType="ContentPresenter">
+                    <Setter Property="Canvas.Left" Value="{Binding XPos}"/>
+                    <Setter Property="Canvas.Bottom" Value="{Binding YPos}"/>
+                </Style>
+            </ItemsControl.ItemContainerStyle>
+        </ItemsControl>
 
     </Canvas>
 </mah:MetroWindow>

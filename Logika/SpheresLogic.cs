@@ -23,7 +23,7 @@ namespace Logika
             Random rnd = new Random();
             double rndX = rnd.Next(100, 800);
             double rndY = rnd.Next(100, 500);
-            double rndR = rnd.Next(20, 50);
+            double rndR = 35;
             Shape = ShapesDataApi.CreateSphere(rndX,rndY,rndR);
             ShapesDataApi.Add(Shape);
 
@@ -71,6 +71,10 @@ namespace Logika
         {
             return ShapesDataApi.GetRad(index);
         }
-
+        
+        public void MoveToNextPos(double x, double y, int index)
+        {
+            ShapesDataApi.MoveNext(x, y, index);
+        }
     }
 }

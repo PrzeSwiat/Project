@@ -49,6 +49,12 @@ namespace Dane
             return shape.PositionY;
         }
 
+        public override void MoveNext(double x, double y, int index)
+        {
+            Sphere shape = (Sphere)Shapes[index];
+            shape.Move(x, y);
+        }
+
         public override void Remove(Shapes shape)
         {
             Shapes.Remove(shape);

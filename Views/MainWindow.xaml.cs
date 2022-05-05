@@ -23,7 +23,6 @@ namespace Views
     {
         public MainWindow()
         {
-           
         }
     }
 }
