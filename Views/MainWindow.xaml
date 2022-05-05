@@ -34,7 +34,7 @@
         Content="Confirm"
         Background="LightGray"
         Canvas.Left ="400"
-        Command="{Binding ConfirmButtomCommand}"/>
+        Command="{Binding ConfirmButtonCommand}"/>
 
 
         <TextBox Width="150" MaxLength="20" 
@@ -43,6 +43,7 @@
                 Text="{Binding ChangeOfText}">
         </TextBox>
         <Rectangle Width="800" Height="500" Stroke="Gray" StrokeThickness="3" Canvas.Left="50" Canvas.Bottom="25"/>
+        
         <ItemsControl x:Name="ic" ItemsSource="{Binding Items}">
             <ItemsControl.Resources>
                 <DataTemplate DataType="{x:Type vm:MainViewModel}">

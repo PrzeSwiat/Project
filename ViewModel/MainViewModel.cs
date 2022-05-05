@@ -10,22 +10,48 @@ using System.Windows.Input;
 using ViewModel;
 using Model;
 using System.Windows.Controls;
+using System.Collections.ObjectModel;
 
 namespace ViewModels
 {
     public class MainViewModel : ViewModelBase
     {
+        DataStore dataStore;
         private string _buttonClick;
-        private string _changeOfText;
-        private DataStore DataStore = new DataStore();
+        private string _changeOfText = "Set amount of Spheres";
+        private int AmountOfShperes=0;
+        private ObservableCollection<DataStore> _items;
+        private static System.Timers.Timer? Timer;
 
         public MainViewModel()
         {
-            ChangeOfText = "Set amount of Spheres";
-            AddSphereCommand = new RelayCommand(DataStore.CreateOneSphere);
-
+           
+            AddSphereCommand = new RelayCommand(() => AddSphereHandler());
+            ConfirmButtonCommand = new RelayCommand(() => ConfirmButtonHandler());
 
         }
+        private void AddSphereHandler()
+        {
+            Items = new ObservableCollection<DataStore>();
+            DataStore dataStore= new DataStore();
+            dataStore.CreateOneSphere();
+            Items.Add(dataStore);
+
+        }
+        private void ConfirmButtonHandler()
+        {
+            if(String.IsNullOrEmpty(ChangeOfText))
+            {
+                AmountOfShperes = 0;
+            }
+            else
+            {
+                AmountOfShperes++;
+            }
+
+            ChangeOfText = _changeOfText.ToString();
+        }
+
 
         public string ChangeOfText
         {
@@ -33,31 +59,35 @@ namespace ViewModels
             set
             {
                 _changeOfText = value;
-                OnPropertyChanged();
+                AmountOfShperes = int.Parse(_changeOfText);
+                RaisePropertyChanged("ChangeOfText");
             }
         }
 
-        public RelayCommand ConfirmButtomCommand
+        public ICommand ConfirmButtonCommand
         {
             get;
             set;
         }
-        public RelayCommand AddSphereCommand
+        public ICommand AddSphereCommand
         {
             get;
             set;
         }
 
-        public string ButtonClick
+
+        public ObservableCollection<DataStore> Items 
         {
-            get { return _buttonClick; }
+            get
+            {
+                return _items;
+            }
             set
             {
-                _buttonClick = value;
-                OnPropertyChanged();
+                _items = value;
+                RaisePropertyChanged("Items");
             }
         }
-
 
         public event PropertyChangedEventHandler PropertyChanged;
 

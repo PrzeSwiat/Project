@@ -1,4 +1,5 @@
-﻿using Logika;
+﻿using Dane;
+using Logika;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -20,7 +21,8 @@ namespace Model
 
         public DataStore()
         {
-            CreateOneSphere();
+            Sphere newShape = (Sphere)spheresLogic.InitializeSphere();
+
         }
 
         public double ElipseX 
@@ -34,13 +36,23 @@ namespace Model
             set { spheresLogic.MoveToNextPos(0, value, AmountOfSpheres); }
         }
 
-        public void CreateOneSphere()
+        public DataStore CreateOneSphere()
         {
             spheresLogic.InitializeSphere();
             _elipseX = spheresLogic.GetXPos(AmountOfSpheres);
             _elipseY = spheresLogic.GetXPos(AmountOfSpheres);
 
             AmountOfSpheres++;
+
+            return this;
+        }
+
+        public void CreateAmountOfShperes(int amount)
+        {
+            for(int i = 0; i < amount; i++)
+            {
+                CreateOneSphere();
+            }
         }
 
 
