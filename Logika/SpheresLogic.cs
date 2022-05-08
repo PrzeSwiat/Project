@@ -7,85 +7,61 @@ using System.Threading.Tasks;
 
 namespace Logika
 {
-    public class SpheresLogic
+    internal class SpheresLogic : ShapesDataApi
     {
-        private ShapesDataApi ShapesDataApi;
-        private Shapes Shape;
-        private double MoveX;
-        private double MoveY;
-        private int SphereIndex;
+        internal readonly int _windowWidth;
+        internal readonly int _windowHeight;
+        internal readonly int _Radius;
+        internal readonly List<SpheresAPI> _sphereStorage = new();
 
-        public SpheresLogic()
+        public SpheresLogic(int windowWidth, int windowHeight)
         {
-            ShapesDataApi = ShapesDataApi.CreateShapesList();
+            _windowHeight = windowHeight;
+            _windowWidth = windowWidth;
+            _Radius = Math.Min(windowHeight, windowWidth) / 30;
+
         }
 
-        public List<Sphere> GetAllOfSpheres()
-        {
-            return ShapesDataApi.GetSpheres();
-        }
-
-        public Shapes InitializeSphere()
+        private void CreateSphere()
         {
             Random rnd = new Random();
-            double rndX = rnd.Next(100, 800);
-            double rndY = rnd.Next(100, 500);
-            double rndR = 35;
-            Shape = ShapesDataApi.CreateSphere(rndX, rndY, rndR);
-            ShapesDataApi.Add(Shape);
-            SphereIndex = ShapesDataApi.Count();
-
-            return Shape;
-        }
-
-        public List<double> OrderPositionChange()
-        {
-            Random rnd = new Random();
-            double rndPosX = rnd.Next(150, 750);
-            double rndPosY = rnd.Next(150, 450);
-
-            List<double> orderPositions = new List<double>();
-            orderPositions.Add(rndPosX);
-            orderPositions.Add(rndPosY);
-
-            return orderPositions;
-        }
-
-        public int DatasCounter()
-        {
-            int counter = 0;
-            for (int i = 0; i < ShapesDataApi.Count(); i++)
+            int xVelocity, yVelocity;
+            int speed = 6;
+            do
             {
-                counter++;
+                xVelocity = rnd.Next(-speed, speed);
+                yVelocity = rnd.Next(-speed, speed);
             }
+            while (xVelocity == 0 || yVelocity == 0);
 
-            return counter;
-        }
+            int xPos = rnd.Next(_Radius, _windowWidth - _Radius);
+            int yPos = rnd.Next(_Radius, _windowHeight - _Radius);
 
-        public Sphere GetSphere(int index)
-        {
-            return (Sphere)ShapesDataApi.Get(index);
-        }
-
-        public double GetXPos(int index)
-        {
-            return ShapesDataApi.GetX(index);
-        }
-        public double GetYPos(int index)
-        {
-            return ShapesDataApi.GetY(index);
-        }
-        public double GetRad(int index)
-        {
-            return ShapesDataApi.GetRad(index);
+            Spheres newSphere = new(xPos, yPos, _Radius, xVelocity, yVelocity);
+            _sphereStorage.Add(newSphere);
         }
 
-        public void MoveToNextPos()
+        override public void CreateSpheres(int amount)
         {
-            var lista = OrderPositionChange();
-            MoveX = lista[0];
-            MoveY = lista[1];
-            ShapesDataApi.MoveNext(MoveX, MoveY, SphereIndex);
+            for (int i = 0; i < amount; i++)
+            {
+                CreateSphere();
+            }
+        }
+
+
+        override public void TickSpheres()
+        {
+            foreach (Spheres sphere in _sphereStorage)
+            {
+                sphere.MoveSphereWithinBox(_windowWidth, _windowHeight);
+            }
+        }
+
+
+        override public List<SpheresAPI> GetAllSpheres()
+        {
+            return _sphereStorage;
         }
 
     }

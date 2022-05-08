@@ -11,7 +11,7 @@ namespace Testing
     [TestClass]
     public class DataLayerTesting
     {
-        private ShapesDataApi shapesDataApi;
+        private DataApi shapesDataApi;
         private Sphere sphere1;
         private Sphere sphere2;
         
@@ -20,10 +20,10 @@ namespace Testing
         public void DataApiTest()
         {
 
-            shapesDataApi = ShapesDataApi.CreateShapesList();
+            shapesDataApi = DataApi.CreateShapesList();
             Shapes shapesTest = new Sphere(0,0,50);
-            sphere1 = ShapesDataApi.CreateSphere(0, 0, 50);
-            sphere2 = ShapesDataApi.CreateSphere(100, -100, 2);
+            sphere1 = DataApi.CreateSphere(0, 0, 50);
+            sphere2 = DataApi.CreateSphere(100, -100, 2);
 
 
             shapesDataApi.Add(sphere1);
