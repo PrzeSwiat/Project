@@ -7,10 +7,13 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
+	<ItemGroup>
+		<ProjectReference Include="..\ViewModel\ViewModel.csproj" />
+	</ItemGroup>
+	
   <ItemGroup>
     <PackageReference Include="MahApps.Metro" Version="2.4.9" />
 	  <PackageReference Include="Aspose.PDF" Version="22.4.0.0" />
-	  <ProjectReference Include="..\ViewModel\ViewModel.csproj" />
   </ItemGroup>
 
 </Project>

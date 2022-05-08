@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿
 namespace Logika
 {
     internal class Spheres : ShapesDataApi.SpheresAPI
@@ -32,18 +27,39 @@ namespace Logika
                 moved = false;
                 if (x < Math.Abs(XVelocity))
                 {
-                    XPosition += XVelocity / Math.Abs(XVelocity); // -1 if Vel<0, 1 if Vel>0, Vel=0 while will not happen
+                    XPosition += XVelocity / Math.Abs(XVelocity);
                     x++;
                     moved = true;
 
                 }
                 if (y < Math.Abs(YVelocity))
                 {
-                    YPosition += YVelocity / Math.Abs(YVelocity); // -1 if Vel<0, 1 if Vel>0, Vel=0 while will not happen
+                    YPosition += YVelocity / Math.Abs(YVelocity); 
                     y++;
                     moved = true;
 
                 }
+                BounceIfOnEdge(width,height);
+            }
+        }
+        private void BounceIfOnEdge(int width, int height)
+        {
+            if (XPosition <= Radius)           
+            {
+                XVelocity = Math.Abs(XVelocity);
+            }
+            if (XPosition >= width - Radius)    
+            {
+                XVelocity = Math.Abs(XVelocity) * (-1);
+            }
+
+            if (YPosition <= Radius)      
+            {
+                YVelocity = Math.Abs(YVelocity);
+            }
+            if (YPosition >= height - Radius)  
+            {
+                YVelocity = Math.Abs(YVelocity) * (-1);
             }
         }
     }

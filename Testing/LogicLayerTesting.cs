@@ -69,15 +69,16 @@ namespace Testing
 
             for (int i = 0; i < 1000; i++)
             {
-                foreach (ShapesDataApi.SpheresAPI ball in api.GetAllSpheres())
+                foreach (ShapesDataApi.SpheresAPI sphere in api.GetAllSpheres())
                 {
-                    Assert.IsTrue(ball.XPosition >= 0);
-                    Assert.IsTrue(ball.XPosition <= 100);
+                    Assert.IsTrue(sphere.XPosition >= 0);
+                    Assert.IsTrue(sphere.XPosition <= 100);
 
-                    Assert.IsTrue(ball.YPosition >= 0);
-                    Assert.IsTrue(ball.YPosition <= 50);
+                    Assert.IsTrue(sphere.YPosition >= 0);
+                    Assert.IsTrue(sphere.YPosition <= 50);
                 }
                 api.TickSpheres();
+
             }
 
         }

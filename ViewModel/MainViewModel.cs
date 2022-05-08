@@ -1,85 +1,141 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Input;
-using ViewModel;
+﻿using System.Windows;
 using Model;
-using System.Windows.Controls;
-using System.Collections.ObjectModel;
-using Dane;
+using ViewModel;
+using static Logika.ShapesDataApi;
 
-namespace ViewModels
+namespace ViewModel
 {
-    public class MainViewModel : ViewModelBase
+    internal class MainViewModel : BaseViewModel
     {
-        public RelayCommand _add { get; }
-        public RelayCommand _confirm { get; }
-        DataStore dataStore { get; }
-        private string _changeOfText = "Set amount of Spheres";
-        private int AmountOfShperes=0;
-       
+        private string _spheresAmount;
+        public RelayCommand _summon { get; }
+        public RelayCommand _pause { get; }
+        public RelayCommand _resume { get; }
+
+        public bool _summonFlag = true;
+        public bool _resumeFlag = false;
+        public bool _pauseFlag = false;
+
+        public DataStore _DataStore { get; }
+
+        public int _width { get; }
+        public int _height { get; }
 
         public MainViewModel()
         {
-           
-            _add = new RelayCommand(() => AddSphereHandler());
-            _confirm = new RelayCommand(() => ConfirmButtonHandler());
-            dataStore = new DataStore();
-
-        }
-        private void AddSphereHandler()
-        {
-            dataStore.CreateOneSphere();    
-            OnPropertyChanged("Items");
-
-        }
-        private void ConfirmButtonHandler()
-        {
-            if(String.IsNullOrEmpty(ChangeOfText))
-            {
-                AmountOfShperes = 0;
-            }
-            else
-            {
-                AmountOfShperes++;
-            }
-
-            ChangeOfText = _changeOfText.ToString();
-
-            for (int i = 0; i < AmountOfShperes; i++)
-            {
-                dataStore.CreateOneSphere();
-                OnPropertyChanged("Items");
-            }
+            _width = 800;
+            _height = 500;
+            _spheresAmount = "";
+            _summon = new RelayCommand(Summon, SummonProperties);
+            _resume = new RelayCommand(Resume, ResumeProperties);
+            _pause = new RelayCommand(Pause, PauseProperties);
+            _DataStore = new DataStore(_width, _height);
+            SummonFlag = true;
+            ResumeFlag = false;
+            PauseFlag = false;
         }
 
-
-        public string ChangeOfText
+        public string SpheresAmount
         {
-            get { return _changeOfText; }
+            get => _spheresAmount;
             set
             {
-                _changeOfText = value;
-                AmountOfShperes = int.Parse(_changeOfText);
-                RaisePropertyChanged("ChangeOfText");
+                _spheresAmount = value;
+                OnPropertyChanged();
             }
         }
 
-        public Sphere[]? Items { get => dataStore.GetAllSpheres().ToArray(); }
-
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        private void OnPropertyChanged([CallerMemberName] string popertyName = null)
+        public bool SummonFlag
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(popertyName));
+            get => _summonFlag;
+
+            set
+            {
+                _summonFlag = value;
+                _summon.OnCanExecuteChanged();
+            }
         }
 
+        public bool ResumeFlag
+        {
+            get => _resumeFlag;
 
+            set
+            {
+                _resumeFlag = value;
+                _resume.OnCanExecuteChanged();
+            }
+        }
+
+        public bool PauseFlag
+        {
+            get => _pauseFlag;
+
+            set
+            {
+                _pauseFlag = value;
+                _pause.OnCanExecuteChanged();
+            }
+        }
+
+        public SpheresAPI[]? GetSpheres { get => _DataStore.GetSpheres().ToArray(); }
+
+        public void Summon()
+        {
+            try
+            {
+                int numberOfSpheres = int.Parse(_spheresAmount);
+
+                if (numberOfSpheres < 1)
+                {
+                    throw new ArgumentException("Number of Spheres is less than 1");
+                }
+
+                _DataStore.CreateSpheres(numberOfSpheres);
+                OnPropertyChanged("GetSpheres");
+                SummonFlag = false;
+                ResumeFlag = true;
+            }
+            catch (Exception)
+            {
+                SpheresAmount = "";
+            }
+        }
+        public async void Tick()
+        {
+            while (PauseFlag)
+            {
+                await Task.Delay(10);
+                _DataStore.TickSpheres();
+                OnPropertyChanged("GetSpheres");
+            }
+        }
+
+        public void Resume()
+        {
+            PauseFlag = true;
+            ResumeFlag = false;
+            Tick();
+        }
+
+        public void Pause()
+        {
+            ResumeFlag = true;
+            PauseFlag = false;
+        }
+
+        private bool SummonProperties()
+        {
+            return SummonFlag;
+        }
+        private bool ResumeProperties()
+        {
+            return ResumeFlag;
+        }
+
+        private bool PauseProperties()
+        {
+            return PauseFlag;
+        }
     }
 }
