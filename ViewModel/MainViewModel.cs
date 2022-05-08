@@ -5,7 +5,7 @@ using static Logika.ShapesDataApi;
 
 namespace ViewModel
 {
-    internal class MainViewModel : BaseViewModel
+    public class MainViewModel : BaseViewModel
     {
         private string _spheresAmount;
         public RelayCommand _summon { get; }
