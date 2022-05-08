@@ -1,67 +1,39 @@
-﻿using Dane;
-using Logika;
+﻿using Logika;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Text;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Media;
-using System.Windows.Shapes;
 
 namespace Model
 {
-    public class DataStore
+    internal class DataStore
     {
-        private int AmountOfSpheres = 0;
-        SpheresLogic spheresLogic = new SpheresLogic();
-        private double _elipseX = 0;
-        private double _elipseY = 0;
+        private readonly ShapesDataApi _spheresApi;
+        private readonly int _width;
+        private readonly int _height;
 
-        public DataStore()
+        internal DataStore(int width, int height)
         {
-            //Sphere newShape = (Sphere)spheresLogic.InitializeSphere();
+            _width = width;
+            _height = height;
+            _spheresApi = ShapesDataApi.Initialize(width, height);
         }
 
-        public List<Sphere> GetAllSpheres()
+        internal List<ShapesDataApi.SpheresAPI> GetSpheres()
         {
-            return spheresLogic.GetAllOfSpheres();
+            return _spheresApi.GetAllSpheres();
         }
 
-        public double ElipseX
+        internal void CreateSpheres(int amount)
         {
-            get { return spheresLogic.GetXPos(AmountOfSpheres); }
-            set { spheresLogic.MoveToNextPos(); }
-        }
-        public double ElipseY
-        {
-            get { return spheresLogic.GetYPos(AmountOfSpheres); }
-            set { spheresLogic.MoveToNextPos(); }
-        }
-
-        public DataStore CreateOneSphere()
-        {
-            spheresLogic.InitializeSphere();
-            _elipseX = spheresLogic.GetXPos(AmountOfSpheres);
-            _elipseY = spheresLogic.GetXPos(AmountOfSpheres);
-
-            AmountOfSpheres++;
-
-            return this;
-        }
-
-        public void CreateAmountOfShperes(int amount)
-        {
-            for (int i = 0; i < amount; i++)
-            {
-                CreateOneSphere();
-            }
+            _spheresApi.CreateSpheres(amount);
         }
 
         internal void TickSpheres()
         {
-            spheresLogic.MoveToNextPos();
+            _spheresApi.TickSpheres();
         }
     }
-}
+ }
