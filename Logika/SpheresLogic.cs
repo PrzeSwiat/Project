@@ -1,4 +1,6 @@
 ﻿
+using Dane;
+
 namespace Logika
 {
     internal class SpheresLogic : ShapesDataApi
@@ -7,13 +9,13 @@ namespace Logika
         internal readonly int _windowHeight;
         internal readonly int _Radius;
         internal readonly List<SpheresAPI> _sphereStorage = new();
-
+        private DataAbstractApi _dataAbstractApi;
         public SpheresLogic(int windowWidth, int windowHeight)
         {
             _windowHeight = windowHeight;
             _windowWidth = windowWidth;
             _Radius = Math.Min(windowHeight, windowWidth) / 30;
-
+            _dataAbstractApi = DataAbstractApi.CreateSphereData();
         }
 
         private void CreateSphere()

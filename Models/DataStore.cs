@@ -1,4 +1,5 @@
-﻿using Logika;
+﻿using Dane;
+using Logika;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;

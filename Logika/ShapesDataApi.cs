@@ -3,6 +3,8 @@ namespace Logika
 {
     public abstract class ShapesDataApi
     {
+        
+
         public abstract class SpheresAPI
         {
             public int XPosition { get; set; }

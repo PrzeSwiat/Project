@@ -1,13 +1,15 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Logika;
-using System;
 using System.Collections.Generic;
 
 namespace Testing
 {
+    
     [TestClass]
     public class LogicLayerTesting
     {
+        
+
         [TestMethod]
         public void CreateSpheresTest()
         {
