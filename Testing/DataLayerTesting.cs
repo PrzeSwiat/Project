@@ -10,24 +10,24 @@ namespace Testing
         public void CreateSphereDataTest()
         {
             DataAbstractApi api;
-            api = DataAbstractApi.CreateSphereData();
+            api = DataAbstractApi.getSphere(3,4);
             Assert.IsNotNull(api);
+            Assert.IsTrue(api.XPosition==3);
+            Assert.IsTrue(api.YPosition==4);
         }
 
         [TestMethod]
         public void SetterGetterTest() 
         {
             DataAbstractApi api;
-            api = DataAbstractApi.CreateSphereData();
-            api.setX(3);
-            api.setY(4);
-
-            Assert.AreEqual(api.getX(), 3);
-            Assert.AreEqual(api.getY(), 4);
-            api.setX(4);
-            api.setY(3);
-            Assert.AreEqual(api.getX(), 4);
-            Assert.AreEqual(api.getY(), 3);
+            api = DataAbstractApi.getSphere(3,4);
+            Assert.IsTrue(api.Vx<3);
+            Assert.IsTrue(api.Vy<3);
+            Assert.IsTrue(api.Vx > -3);
+            Assert.IsTrue(api.Vy > -3);
+            api.move();
+            Assert.AreNotEqual(api.XPosition, 3);
+            Assert.AreNotEqual(api.YPosition, 4);
         }
     }
 }

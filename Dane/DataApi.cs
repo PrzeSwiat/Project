@@ -1,35 +1,39 @@
 ﻿
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
+
 namespace Dane
 {
     internal class DataApi : DataAbstractApi
     {
-
-        private double _x;
-        private double _y;
-
-        public DataApi() 
+        public DataApi(double x, double y) 
         { 
+            XPosition = x;
+            YPosition = y;
+            Radius = 30;
+            Mass = 10;
+
+            Random rnd = new Random();
+            do
+            {
+                Vx = rnd.Next(-3, 3);
+                Vy = rnd.Next(-3, 3);
+            } while (Vx == 0 || Vy == 0);
         }
 
+        public override event PropertyChangedEventHandler? PropertyChanged;
 
-        public override double getX()
+        public override void move()
         {
-            return _x;
+            XPosition += Vx;
+            YPosition += Vy;
+
+            RaisePropertyChanged();
         }
 
-        public override double getY()
+        private void RaisePropertyChanged([CallerMemberName] string? propertyName = null)
         {
-            return _y;
-        }
-
-        public override void setX(double x)
-        {
-            _x = x;
-        }
-
-        public override void setY(double y)
-        {
-            _y = y;
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

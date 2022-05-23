@@ -15,7 +15,6 @@ namespace Logika
             _windowHeight = windowHeight;
             _windowWidth = windowWidth;
             _Radius = Math.Min(windowHeight, windowWidth) / 30;
-            _dataAbstractApi = DataAbstractApi.CreateSphereData();
         }
 
         private void CreateSphere()
