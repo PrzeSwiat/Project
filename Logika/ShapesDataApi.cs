@@ -1,16 +1,12 @@
-﻿
+﻿using Dane;
 namespace Logika
 {
     public abstract class ShapesDataApi
     {
-        
+        public object _lock = new object();
+        public bool isMoving { get; set; }
+        public List<Thread> threads;
 
-        public abstract class SpheresAPI
-        {
-            public int XPosition { get; set; }
-            public int YPosition { get; set; }
-            public int Radius { get; set; }
-        };
 
         public static ShapesDataApi Initialize(int windowWidth, int windowHeight)
         {
@@ -18,11 +14,9 @@ namespace Logika
         }
 
         public abstract void CreateSpheres(int amount);
+        public abstract List<DataAbstractApi> GetAllSpheres();
 
-        public abstract void TickSpheres();
-
-        public abstract List<SpheresAPI> GetAllSpheres();
-
+        public abstract void BounceIfOnEdge(DataAbstractApi sphere);
     }
 }
 
