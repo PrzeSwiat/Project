@@ -11,7 +11,7 @@ namespace Model
 {
     public class DataStore
     {
-        private readonly ShapesDataApi _spheresApi;
+        private readonly LogicApi _spheresApi;
         private readonly int _width;
         private readonly int _height;
 
@@ -19,10 +19,10 @@ namespace Model
         {
             _width = width;
             _height = height;
-            _spheresApi = ShapesDataApi.Initialize(width, height);
+            _spheresApi = LogicApi.Initialize(width, height);
         }
 
-        public List<ShapesDataApi.SpheresAPI> GetSpheres()
+        public List<LogicApi.SpheresAPI> GetSpheres()
         {
             return _spheresApi.GetAllSpheres();
         }

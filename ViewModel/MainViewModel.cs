@@ -1,7 +1,7 @@
 ﻿using System.Windows;
 using Model;
 using ViewModel;
-using static Logika.ShapesDataApi;
+using static Logika.LogicApi;
 
 namespace ViewModel
 {
