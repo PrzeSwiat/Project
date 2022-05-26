@@ -51,12 +51,12 @@ namespace Logika
             }
         }
 
-        public override List<IAbstractSphere> GetAllSpheres()
+        public override List<DataAbstractApi> GetAllSpheres()
         {
-            List<IAbstractSphere> list = new();
+            List<DataAbstractApi> list = new();
             foreach (DataAbstractApi sphere in _SphereStorage)
             {
-                list.Add(new AbstractSphere(sphere.XPosition, sphere.YPosition));
+                list.Add(sphere);
             }
             return list;
         }

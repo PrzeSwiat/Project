@@ -22,9 +22,14 @@ namespace Model
             _spheresApi = LogicApi.Initialize(width, height);
         }
 
-        public List<IAbstractSphere> GetSpheres()
+        public List<Object> GetSpheres()
         {
-            return _spheresApi.GetAllSpheres();
+            List<Object> spheres = new List<Object>();
+            foreach(var one in _spheresApi.GetAllSpheres())
+            {
+                spheres.Add(one);
+            }
+            return spheres;
         }
 
         public void CreateSpheres(int amount)

@@ -78,7 +78,7 @@ namespace ViewModel
             }
         }
 
-        public IAbstractSphere[]? GetSpheres { get => _DataStore.GetSpheres().ToArray(); }
+        public Object[]? GetSpheres { get => _DataStore.GetSpheres().ToArray(); }
 
         public void Summon()
         {
