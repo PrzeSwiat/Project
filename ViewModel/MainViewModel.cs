@@ -78,7 +78,7 @@ namespace ViewModel
             }
         }
 
-        public SpheresAPI[]? GetSpheres { get => _DataStore.GetSpheres().ToArray(); }
+        public Object[]? GetSpheres { get => _DataStore.GetSpheres().ToArray(); }
 
         public void Summon()
         {
@@ -95,6 +95,7 @@ namespace ViewModel
                 OnPropertyChanged("GetSpheres");
                 SummonFlag = false;
                 ResumeFlag = true;
+                Tick();
             }
             catch (Exception)
             {
@@ -103,10 +104,9 @@ namespace ViewModel
         }
         public async void Tick()
         {
-            while (PauseFlag)
+            while (true)
             {
                 await Task.Delay(10);
-                _DataStore.TickSpheres();
                 OnPropertyChanged("GetSpheres");
             }
         }

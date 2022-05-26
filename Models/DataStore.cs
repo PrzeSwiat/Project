@@ -1,5 +1,4 @@
-﻿using Dane;
-using Logika;
+﻿using Logika;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -22,19 +21,19 @@ namespace Model
             _spheresApi = LogicApi.Initialize(width, height);
         }
 
-        public List<LogicApi.SpheresAPI> GetSpheres()
+        public List<Object> GetSpheres()
         {
-            return _spheresApi.GetAllSpheres();
+            List<Object> spheres = new List<Object>();
+            foreach (object sphere in _spheresApi.GetAllSpheres())
+            {
+                spheres.Add(sphere);
+            }
+            return spheres;
         }
 
         public void CreateSpheres(int amount)
         {
             _spheresApi.CreateSpheres(amount);
-        }
-
-        public void TickSpheres()
-        {
-            _spheresApi.TickSpheres();
         }
     }
  }

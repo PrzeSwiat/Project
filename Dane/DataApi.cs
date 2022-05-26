@@ -10,7 +10,7 @@ namespace Dane
         { 
             XPosition = x;
             YPosition = y;
-            Radius = 30;
+            Radius = 15;
             Mass = 10;
 
             Random rnd = new Random();
