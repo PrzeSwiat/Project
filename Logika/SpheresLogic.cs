@@ -142,7 +142,6 @@ namespace Logika
         {
             isMoving = false;
             threads.Clear();
-            _SphereStorage.Clear();
         }
     }
 }
