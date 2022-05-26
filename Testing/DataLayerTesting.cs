@@ -21,10 +21,6 @@ namespace Testing
         {
             DataAbstractApi api;
             api = DataAbstractApi.getSphere(3,4);
-            Assert.IsTrue(api.Vx<3);
-            Assert.IsTrue(api.Vy<3);
-            Assert.IsTrue(api.Vx > -3);
-            Assert.IsTrue(api.Vy > -3);
             api.move();
             Assert.AreNotEqual(api.XPosition, 3);
             Assert.AreNotEqual(api.YPosition, 4);
