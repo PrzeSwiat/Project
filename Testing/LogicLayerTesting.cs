@@ -43,17 +43,6 @@ namespace Testing
 
         }
 
-        [TestMethod]
-        public void BounceTest()
-        {
-            LogicApi api = LogicApi.Initialize(100, 100);
-            api.SummonSpheres(1);
-            var balls = api.GetAllSpheres();
-            balls[0].XPosition = 95;
-            int temp = (int)balls[0].Vx;
-            api.BounceIfOnEdge(balls[0]);
-            Assert.AreEqual(Math.Abs(temp) * (-1), balls[0].Vx);
-        }
 
 
     }

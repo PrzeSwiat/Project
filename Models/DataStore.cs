@@ -6,6 +6,7 @@ using System.Diagnostics;
 using System.Text;
 using System.Windows;
 
+
 namespace Model
 {
     public class DataStore
@@ -21,19 +22,19 @@ namespace Model
             _spheresApi = LogicApi.Initialize(width, height);
         }
 
-        public List<Object> GetSpheres()
+        public List<IAbstractSphere> GetSpheres()
         {
-            List<Object> spheres = new List<Object>();
-            foreach (object sphere in _spheresApi.GetAllSpheres())
-            {
-                spheres.Add(sphere);
-            }
-            return spheres;
+            return _spheresApi.GetAllSpheres();
         }
 
         public void CreateSpheres(int amount)
         {
-            _spheresApi.CreateSpheres(amount);
+            _spheresApi.SummonSpheres(amount);
+        }
+
+        public void ClearThreads()
+        {
+            _spheresApi.ClearThreads();
         }
     }
  }

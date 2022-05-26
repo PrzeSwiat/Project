@@ -51,9 +51,14 @@ namespace Logika
             }
         }
 
-        public override List<DataAbstractApi> GetAllSpheres()
+        public override List<IAbstractSphere> GetAllSpheres()
         {
-            return _SphereStorage;
+            List<IAbstractSphere> list = new();
+            foreach (DataAbstractApi sphere in _SphereStorage)
+            {
+                list.Add(new AbstractSphere(sphere.XPosition, sphere.YPosition));
+            }
+            return list;
         }
 
         private DataAbstractApi? FindCollidingSphere(DataAbstractApi sphere)
@@ -111,7 +116,7 @@ namespace Logika
                         {
                             CollisionEvent(sphere);
                         }
-                        //System.Diagnostics.Debug.WriteLine("Ball dir=" + ball.dir.ToString() + ", speed=" + ball.speed.ToString());
+                        System.Diagnostics.Debug.WriteLine("Ball =" + sphere.XPosition.ToString() + ", speed=" + sphere.YPosition.ToString());
                         Thread.Sleep(5);
                     }
                 });
@@ -131,6 +136,13 @@ namespace Logika
                     t.Start();
                 }
             }
+        }
+
+        public override void ClearThreads()
+        {
+            isMoving = false;
+            threads.Clear();
+            _SphereStorage.Clear();
         }
     }
 }

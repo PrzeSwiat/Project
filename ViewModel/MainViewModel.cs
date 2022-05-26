@@ -1,7 +1,7 @@
 ﻿using System.Windows;
 using Model;
 using ViewModel;
-using static Logika.LogicApi;
+using Logika;
 
 namespace ViewModel
 {
@@ -78,7 +78,7 @@ namespace ViewModel
             }
         }
 
-        public Object[]? GetSpheres { get => _DataStore.GetSpheres().ToArray(); }
+        public IAbstractSphere[]? GetSpheres { get => _DataStore.GetSpheres().ToArray(); }
 
         public void Summon()
         {
@@ -95,7 +95,6 @@ namespace ViewModel
                 OnPropertyChanged("GetSpheres");
                 SummonFlag = false;
                 ResumeFlag = true;
-                Tick();
             }
             catch (Exception)
             {
@@ -122,6 +121,7 @@ namespace ViewModel
         {
             ResumeFlag = true;
             PauseFlag = false;
+            _DataStore.ClearThreads();
         }
 
         private bool SummonProperties()
