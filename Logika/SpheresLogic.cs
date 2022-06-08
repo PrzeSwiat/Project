@@ -30,27 +30,6 @@ namespace Logika
         }
 
 
-        public override void BounceIfOnEdge(DataAbstractApi sphere)
-        {
-            if (sphere.XPosition <= sphere.Radius)    
-            {
-                sphere.Vx = Math.Abs(sphere.Vx);
-            }
-            if (sphere.XPosition >= _windowWidth - sphere.Radius)   
-            {
-                sphere.Vx = Math.Abs(sphere.Vx) * (-1);
-            }
-
-            if (sphere.YPosition <= sphere.Radius)         
-            {
-                sphere.Vy = Math.Abs(sphere.Vy);
-            }
-            if (sphere.YPosition >= _windowHeight - sphere.Radius)   
-            {
-                sphere.Vy = Math.Abs(sphere.Vy) * (-1);
-            }
-        }
-
         public override List<DataAbstractApi> GetAllSpheres()
         {
             List<DataAbstractApi> list = new();
@@ -100,48 +79,34 @@ namespace Logika
                 collided.Vy = (int)newY2;
             }
         }
-        public void AssignThreads()
-        {
-            threads = new List<Thread>();
-
-            foreach (DataAbstractApi sphere in _SphereStorage)
-            {
-                Thread t = new Thread(() =>
-                {
-                    while (isMoving)
-                    {
-                        sphere.move();
-                        BounceIfOnEdge(sphere);
-                        lock (_lock)
-                        {
-                            CollisionEvent(sphere);
-                        }
-                        System.Diagnostics.Debug.WriteLine("Ball =" + sphere.XPosition.ToString() + ", speed=" + sphere.YPosition.ToString());
-                        Thread.Sleep(5);
-                    }
-                });
-                threads.Add(t);
-            }
-        }
+       
         public override void SummonSpheres(int amount)
         {
             CreateSpheres(amount);
-            AssignThreads();
 
-            if (!isMoving)
+            // zastąp to zaraz
+            foreach (DataApi sphere in _SphereStorage) 
             {
-                isMoving = true;
-                foreach (Thread t in threads)
-                {
-                    t.Start();
-                }
+                sphere.move();
             }
+
+            //if (!isMoving)
+            //{
+            //    isMoving = true;
+            //    foreach (Thread t in threads)
+            //    {
+            //        t.Start();
+            //    }
+            //}
+            //????
         }
 
         public override void ClearThreads()
         {
-            isMoving = false;
-            threads.Clear();
+           foreach (DataApi sphere in _SphereStorage)
+            {
+                sphere.ClearThreads();
+            }
         }
     }
 }
