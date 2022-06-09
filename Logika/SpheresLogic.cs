@@ -1,105 +1,96 @@
 ﻿
 using Dane;
+using System.ComponentModel;
 
 namespace Logika
 {
-    internal class SpheresLogic : LogicApi
+    public class BallConnector : INotifyPropertyChanged
     {
-        internal readonly int _Radius = 15;
-        internal readonly List<DataAbstractApi> _SphereStorage = new();
-
-        internal readonly int _windowWidth;
-        internal readonly int _windowHeight;
-
-        public SpheresLogic(int windowWidth, int windowHeight)
+        public BallConnector(Ball ball)
         {
-            _windowHeight = windowHeight;
-            _windowWidth = windowWidth;
+            _ball = ball;
+            ball.PropertyChanged += DataBallChanged;
         }
 
-
-        override public void CreateSpheres(int amount)
+        public void DataBallChanged(object sender, PropertyChangedEventArgs e)
         {
-            Random rnd = new Random();
-            for (int i = 0; i < amount; i++)
+            RaisePropertyChanged("Coordinates");
+        }
+
+        public double X
+        {
+            get => _ball.X;
+            set
             {
-                int xPos = rnd.Next(_Radius, _windowWidth - _Radius);
-                int yPos = rnd.Next(_Radius, _windowHeight - _Radius);
-                _SphereStorage.Add(DataAbstractApi.getSphere(xPos, yPos));
+                _ball.X = value;
+                RaisePropertyChanged(nameof(X));
             }
         }
 
-
-        public override List<DataAbstractApi> GetAllSpheres()
+        public double Y
         {
-            List<DataAbstractApi> list = new();
-            foreach (DataAbstractApi sphere in _SphereStorage)
+            get => _ball.Y;
+            set
             {
-                list.Add(sphere);
+                _ball.Y = value;
+                RaisePropertyChanged(nameof(Y));
             }
-            return list;
+
         }
 
-        private DataAbstractApi? FindCollidingSphere(DataAbstractApi sphere)
+        public double R
         {
-            foreach (DataAbstractApi other in _SphereStorage)
+            get => _ball.R;
+            set
             {
-                if (other == sphere)
-                    continue;
-                double distance = Math.Sqrt(Math.Pow((sphere.XPosition + sphere.Vx - other.XPosition + other.Vx), 2) +
-                                            Math.Pow((sphere.YPosition + sphere.Vy - other.YPosition + other.Vy), 2));
-                if (distance <= sphere.Radius + other.Radius)
-                    return other;
-            }
-            return null;
-        }
+                if (value > 0)
+                {
+                    _ball.R = value;
+                }
 
-        private void CollisionEvent(DataAbstractApi sphere)
-        {
-            DataAbstractApi? collided = FindCollidingSphere(sphere);
-            if (collided != null)
-            {
-                double newX1, newX2, newY1, newY2;
+                else
+                {
+                    throw new ArgumentException();
+                }
 
-                newX1 = (sphere.Vx * (sphere.Mass - collided.Mass) / (sphere.Mass + collided.Mass)
-                        + (2 * collided.Mass * collided.Vx) / (sphere.Mass + collided.Mass));
-
-                newY1 = (sphere.Vy * (sphere.Mass - collided.Mass) / (sphere.Mass + collided.Mass) 
-                        + (2 * collided.Mass * collided.Vy) / (sphere.Mass + collided.Mass));
-
-                newX2 = (collided.Vx * (collided.Mass - sphere.Mass) / (sphere.Mass + collided.Mass) 
-                        + (2 * sphere.Mass * sphere.Vx) / (sphere.Mass + collided.Mass));
-
-                newY2 = (collided.Vy * (collided.Mass - sphere.Mass) / (sphere.Mass + collided.Mass) 
-                        + (2 * sphere.Mass * sphere.Vy) / (sphere.Mass + collided.Mass));
-
-                sphere.Vx = (int)newX1;
-                sphere.Vy = (int)newY1;
-                collided.Vx = (int)newX2;
-                collided.Vy = (int)newY2;
             }
         }
-       
-        public override void SummonSpheres(int amount)
+
+        public double xStep
         {
-            CreateSpheres(amount);
-
-            // zastąp to zaraz
-            foreach (DataApi sphere in _SphereStorage) 
+            get => _ball.XStep;
+            set
             {
-                sphere.move();
+                _ball.XStep = value;
             }
-
-            
-            //????
         }
 
-        public override void ClearThreads()
+        public double yStep
         {
-           foreach (DataApi sphere in _SphereStorage)
+            get => _ball.YStep;
+            set
             {
-                sphere.ClearThreads();
+                _ball.YStep = value;
             }
+        }
+
+        public double M
+        {
+            get
+            {
+                return _ball.M;
+            }
+        }
+
+        public Ball Ball { get => _ball; }
+
+        private readonly Ball _ball;
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        public void RaisePropertyChanged(string propertyName)
+        {
+            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

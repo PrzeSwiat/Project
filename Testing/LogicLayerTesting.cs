@@ -2,48 +2,33 @@
 using Logika;
 using System.Collections.Generic;
 using System;
+using Dane;
 
 namespace Testing
 {
-    
+
     [TestClass]
-    public class LogicLayerTesting
+    public class LogicLayerAPITest
     {
-        
-
         [TestMethod]
-        public void CreateSpheresTest()
+        public void LogicLayerTests()
         {
-            LogicApi api = LogicApi.Initialize(100, 100);
+            DataLayerAbstractAPI dataApi = DataLayerAbstractAPI.CreateAPI();
+            LogicLayerAbstractAPI LogicAPI = LogicLayerAbstractAPI.CreateAPI(dataApi);
 
-            api.CreateSpheres(10);
-            var spheres = api.GetAllSpheres();
-            Assert.AreEqual(10, spheres.Count);
-        }
+            LogicAPI.CreateBox(200, 100, 3, 2);
 
-        [TestMethod]
-        public void SpheresPossitionTest()
-        {
-            LogicApi api = LogicApi.Initialize(100, 50);
+            Assert.AreEqual(3, LogicAPI.GetBalls().Count);
 
-            api.CreateSpheres(10);
-
-            for (int i = 0; i < 1000; i++)
+            foreach (BallConnector ball in LogicAPI.GetBalls())
             {
-                foreach (var sphere in api.GetAllSpheres())
-                {
-                    Assert.IsTrue(sphere.XPosition >= 0);
-                    Assert.IsTrue(sphere.XPosition <= 100);
-
-                    Assert.IsTrue(sphere.YPosition >= 0);
-                    Assert.IsTrue(sphere.YPosition <= 50);
-                }
-
+                Assert.AreEqual(2, ball.R);
+                Assert.IsTrue(ball.X >= ball.R && ball.X <= (100 - ball.R));
+                Assert.IsTrue(ball.Y >= ball.R && ball.Y <= (200 - ball.R));
             }
 
+
         }
-
-
 
     }
 }

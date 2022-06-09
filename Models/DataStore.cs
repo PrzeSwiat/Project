@@ -1,6 +1,8 @@
 ﻿using Logika;
+using Models;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Text;
@@ -9,37 +11,63 @@ using System.Windows;
 
 namespace Model
 {
-    public class DataStore
+    public abstract class ModelLayerAbstractAPI
     {
-        private readonly LogicApi _spheresApi;
-        private readonly int _width;
-        private readonly int _height;
-
-        public DataStore(int width, int height)
+        public static ModelLayerAbstractAPI CreateAPI(LogicLayerAbstractAPI logicLayer = default)
         {
-            _width = width;
-            _height = height;
-            _spheresApi = LogicApi.Initialize(width, height);
+            return new ModelLayer(logicLayer ?? LogicLayerAbstractAPI.CreateAPI());
         }
 
-        public List<Object> GetSpheres()
+        public abstract void GenerateBallsRepresentative(int height, int width, int numberOfBalls, int radiusOfBalls);
+        public abstract void StartSimulation();
+        public abstract void StopSimulation();
+
+        public ObservableCollection<Circle> Circles
         {
-            List<Object> spheres = new List<Object>();
-            foreach(var one in _spheresApi.GetAllSpheres())
+            get => circles;
+            set => circles = value;
+        }
+
+        private ObservableCollection<Circle> circles = new ObservableCollection<Circle>();
+
+
+
+        internal class ModelLayer : ModelLayerAbstractAPI
+        {
+            public ModelLayer(LogicLayerAbstractAPI logicLayer)
             {
-                spheres.Add(one);
+                MyLogicLayer = logicLayer;
             }
-            return spheres;
+
+
+            public override void GenerateBallsRepresentative(int height, int width, int numberOfBalls, int radiusOfBalls)
+            {
+                MyLogicLayer.DestroyThreads();
+                MyLogicLayer.CreateBox(height, width, numberOfBalls, radiusOfBalls);
+
+                circles.Clear();
+
+                foreach (BallConnector bc in MyLogicLayer.GetBalls())
+                {
+                    circles.Add(new Circle(bc));
+                }
+
+                StartSimulation();
+            }
+            public override void StartSimulation()
+            {
+                MyLogicLayer.StartMovingBalls();
+            }
+
+            public override void StopSimulation()
+            {
+                MyLogicLayer.DestroyThreads();
+            }
+
+
+            private readonly LogicLayerAbstractAPI MyLogicLayer;
+
         }
 
-        public void CreateSpheres(int amount)
-        {
-            _spheresApi.SummonSpheres(amount);
-        }
-
-        public void ClearThreads()
-        {
-            _spheresApi.ClearThreads();
-        }
     }
- }
+}
