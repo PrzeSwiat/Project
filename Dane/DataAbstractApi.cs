@@ -31,6 +31,7 @@ namespace Dane
             private List<Thread> threads;
             private bool _moving = false;
             private object _lock = new object();
+            Logger logger;
 
             public DataLayer()
             {
@@ -102,13 +103,19 @@ namespace Dane
                     t.Start();
                 }
 
-               
+                logger = new Logger(GetBalls());
+
+
 
             }
 
             public override void StopMovingBalls()
             {
                 _moving = false;
+                if (logger != null)
+                {
+                    logger.StopLogging();
+                }
             }
 
             public override Box GetBox()

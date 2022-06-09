@@ -1,6 +1,7 @@
 ﻿
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Text.Json.Serialization;
 
 namespace Dane
 {
@@ -72,7 +73,7 @@ namespace Dane
             }
 
         }
-       
+        [JsonIgnore]
         public double R
         {
             get => _r;
@@ -90,7 +91,7 @@ namespace Dane
 
             }
         }
-      
+        [JsonIgnore]
         public double M
         {
             get => _m;
