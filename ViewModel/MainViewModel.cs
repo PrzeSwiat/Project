@@ -2,140 +2,121 @@
 using Model;
 using ViewModel;
 using Logika;
+using System.ComponentModel;
+using System.Collections.ObjectModel;
+using Models;
+using System.Windows.Input;
+using System.Runtime.CompilerServices;
 
 namespace ViewModel
 {
-    public class MainViewModel : BaseViewModel
+    public class ViewModelLayer : INotifyPropertyChanged
     {
-        private string _spheresAmount;
-        public RelayCommand _summon { get; }
-        public RelayCommand _pause { get; }
-        public RelayCommand _resume { get; }
 
-        public bool _summonFlag = true;
-        public bool _resumeFlag = false;
-        public bool _pauseFlag = false;
-
-        public DataStore _DataStore { get; }
-
-        public int _width { get; }
-        public int _height { get; }
-
-        public MainViewModel()
+        public ViewModelLayer()
         {
-            _width = 800;
-            _height = 500;
-            _spheresAmount = "";
-            _summon = new RelayCommand(Summon, SummonProperties);
-            _resume = new RelayCommand(Resume, ResumeProperties);
-            _pause = new RelayCommand(Pause, PauseProperties);
-            _DataStore = new DataStore(_width, _height);
-            SummonFlag = true;
-            ResumeFlag = true;
-            PauseFlag = false;
+            MyModel = ModelLayerAbstractAPI.CreateAPI();
+            Start = new RelayCommand(() => start());
+            Stop = new RelayCommand(() => stop());
+            _numberOfBalls = 5;
+            _startButton = "Start";
         }
 
-        public string SpheresAmount
+        private ModelLayerAbstractAPI MyModel { get; set; }
+
+        private int _numberOfBalls;
+        private int _height = 600;
+        private int _width = 900;
+        private string _startButton;
+        private bool _enabled = true;
+
+        public string StartButton
         {
-            get => _spheresAmount;
+            get => _startButton;
             set
             {
-                _spheresAmount = value;
-                OnPropertyChanged();
+                _startButton = value;
+                RaisePropertyChanged("StartButton");
             }
+
         }
 
-        public bool SummonFlag
+        public int Width
         {
-            get => _summonFlag;
-
+            get => _width;
             set
             {
-                _summonFlag = value;
-                _summon.OnCanExecuteChanged();
+                _width = value;
+                RaisePropertyChanged("Width");
             }
+
         }
 
-        public bool ResumeFlag
-        {
-            get => _resumeFlag;
 
+        public int Height
+        {
+            get => _height;
             set
             {
-                _resumeFlag = value;
-                _resume.OnCanExecuteChanged();
+                _height = value;
+                RaisePropertyChanged("Height");
             }
         }
 
-        public bool PauseFlag
+        public ObservableCollection<Circle> Circles
         {
-            get => _pauseFlag;
+            get => MyModel.Circles;
+            set => MyModel.Circles = value;
+        }
 
+        public string NumberOfBalls
+        {
+            get => _numberOfBalls.ToString();
             set
             {
-                _pauseFlag = value;
-                _pause.OnCanExecuteChanged();
+                if (int.TryParse(value, out int n) && n != 0)
+                    _numberOfBalls = Math.Abs(n);
+                RaisePropertyChanged(nameof(NumberOfBalls));
             }
         }
 
-        public Object[]? GetSpheres { get => _DataStore.GetSpheres().ToArray(); }
-
-        public void Summon()
+        public bool StartEnabled
         {
-            try
+            get => _enabled;
+            set
             {
-                int numberOfSpheres = int.Parse(_spheresAmount);
-
-                if (numberOfSpheres < 1)
-                {
-                    throw new ArgumentException("Number of Spheres is less than 1");
-                }
-
-                _DataStore.CreateSpheres(numberOfSpheres);
-                OnPropertyChanged("GetSpheres");
-                SummonFlag = false;
-                ResumeFlag = true;
-            }
-            catch (Exception)
-            {
-                SpheresAmount = "";
-            }
-        }
-        public async void Tick()
-        {
-            while (true)
-            {
-                await Task.Delay(5);
-                OnPropertyChanged("GetSpheres");
+                _enabled = value;
+                RaisePropertyChanged(nameof(StartEnabled));
             }
         }
 
-        public void Resume()
+        public ICommand Start { get; set; }
+        public ICommand Stop { get; set; }
+
+        private void start()
         {
-            PauseFlag = true;
-            ResumeFlag = false;
-            Tick();
+            MyModel.GenerateBallsRepresentative(Height, Width, _numberOfBalls, 30);
+            StartButton = "Restart";
+            StartEnabled = false;
+
         }
 
-        public void Pause()
+        private void stop()
         {
-            ResumeFlag = true;
-            PauseFlag = false;
-            _DataStore.ClearThreads();
+            MyModel.StopSimulation();
+            StartEnabled = true;
         }
 
-        private bool SummonProperties()
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+
+        protected virtual void RaisePropertyChanged([CallerMemberName] string propertyName = null)
         {
-            return SummonFlag;
-        }
-        private bool ResumeProperties()
-        {
-            return ResumeFlag;
+
+            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        private bool PauseProperties()
-        {
-            return PauseFlag;
-        }
+
     }
 }
