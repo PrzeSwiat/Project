@@ -4,114 +4,127 @@ using System.Runtime.CompilerServices;
 
 namespace Dane
 {
-    public class DataApi : DataAbstractApi
+    public class Ball : INotifyPropertyChanged
     {
-        private double XPos;
-        private double YPos;
-        private double radius;
-        private double VelX;
-        private double VelY;
-        private double mass;
-        private List<DataApi> Apis = new List<DataApi>();
-
-        public object _lock = new object();
-        private bool isMoving { get; set; }
-        private List<Thread> threads;
-
-        public override List<DataApi> DataApis => Apis;
-        public override double XPosition { get => XPos; }
-        public override double YPosition { get => YPos; }
-        public override double Radius { get => radius; }
-        public override double Vx { get => VelX; set => VelX = value; }
-        public override double Vy { get => VelY; set => VelY = value; }
-        public override double Mass { get => mass; }
-
-        
-
-        public DataApi(double x, double y) 
+        public Ball(double x, double y, double radius, double mass, int id)
         {
-            XPos = x;
-            YPos = y;
-            radius = 15;
-            mass = 10;
+            _id = id;
+            _x = x;
+            _y = y;
+            _r = radius;
+            _m = mass;
 
-            Random rnd = new Random();
-            do
+            Random r = new Random();
+
+            if (r.Next(2) == 0)
             {
-                Vx = rnd.Next(-3, 3);
-                Vy = rnd.Next(-3, 3);
-            } while (Vx == 0 || Vy == 0);
+                _xStep = r.NextDouble() * -1;
+            }
+            else
+            {
+                _xStep = r.NextDouble() * 1;
+            }
 
-            Apis.Add(this);
+
+            if (r.Next(2) == 0)
+                _yStep = Math.Sqrt(1 - (_xStep * _xStep));
+            else
+                _yStep = Math.Sqrt(1 - (_xStep * _xStep)) * -1;
+
         }
 
+        private int _id;
+        private double _x;
+        private double _y;
+        private double _r;
+        private double _m;
+        private double _xStep;
+        private double _yStep;
 
-        private void BounceIfOnEdge()
+        public void Move()
         {
-            if (this.XPosition <= this.Radius)
-            {
-                this.Vx = Math.Abs(this.Vx);
-            }
-            if (this.XPosition >= 800 - this.Radius)
-            {
-                this.Vx = Math.Abs(this.Vx) * (-1);
-            }
+            X += XStep;
+            Y += YStep;
+            RaisePropertyChanged("Position");
+        }
 
-            if (this.YPosition <= this.Radius)
+        public int ID
+        {
+            get { return _id; }
+        }
+        public double X
+        {
+            get => _x;
+            set
             {
-                this.Vy = Math.Abs(this.Vy);
-            }
-            if (this.YPosition >= 500 - this.Radius)
-            {
-                this.Vy = Math.Abs(this.Vy) * (-1);
+                _x = value;
+                RaisePropertyChanged("X");
             }
         }
 
-        public void AssignThreads()
+        public double Y
         {
-            threads = new List<Thread>();
-
-            foreach (DataApi sphere in Apis)
+            get => _y;
+            set
             {
-                Thread t = new Thread(() =>
+                _y = value;
+                RaisePropertyChanged("Y");
+            }
+
+        }
+       
+        public double R
+        {
+            get => _r;
+            set
+            {
+                if (value > 0)
                 {
-                    while (isMoving)
-                    {
-                        actualizePos();
-                        BounceIfOnEdge();
-                        lock (_lock)
-                        {
-                            //CollisionEvent(sphere);
-                        }
-                        System.Diagnostics.Debug.WriteLine("Ball =" + sphere.XPosition.ToString() + ", speed=" + sphere.YPosition.ToString());
-                        Thread.Sleep(5);
-                    }
-                });
-                threads.Add(t);
+                    _r = value;
+                }
+
+                else
+                {
+                    throw new ArgumentException();
+                }
+
+            }
+        }
+      
+        public double M
+        {
+            get => _m;
+            set
+            {
+                _m = value;
             }
         }
 
-        public void ClearThreads()
+        public double XStep
         {
-            isMoving = false;
-            threads.Clear();
-           
+            get => _xStep;
+            set
+            {
+                _xStep = value;
+            }
         }
 
-        public override void move()
+        public double YStep
         {
-            AssignThreads();
+            get => _yStep;
+            set
+            {
+                _yStep = value;
+            }
         }
 
-        private void actualizePos() 
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        public void RaisePropertyChanged(string propertyName)
         {
-            XPos += Vx;
-            YPos += Vy;
+            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        public override List<DataApi> GetAllSpheres()
-        {
-            return Apis;
-        }
     }
 }

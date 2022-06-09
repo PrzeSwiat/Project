@@ -31,7 +31,7 @@ namespace ViewModel
             _pause = new RelayCommand(Pause, PauseProperties);
             _DataStore = new DataStore(_width, _height);
             SummonFlag = true;
-            ResumeFlag = false;
+            ResumeFlag = true;
             PauseFlag = false;
         }
 

@@ -90,14 +90,7 @@ namespace Logika
                 sphere.move();
             }
 
-            //if (!isMoving)
-            //{
-            //    isMoving = true;
-            //    foreach (Thread t in threads)
-            //    {
-            //        t.Start();
-            //    }
-            //}
+            
             //????
         }
 
